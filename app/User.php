@@ -7,6 +7,8 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    // забыл добавить soft delete
+
     const ROLE_USER = 'user';
     const ROLE_ADMIN = 'admin';
 
