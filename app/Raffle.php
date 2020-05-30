@@ -8,6 +8,16 @@ use App\Prize;
 
 class Raffle extends Model
 {
+    public static function create(User $user, Prize $prize = null)
+    {
+        $raffle = new self;
+        $raffle->user_id = $user->id;
+        $raffle->prize_id = $prize ? $prize->id : null;
+        $raffle->save();
+
+        return $raffle;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
