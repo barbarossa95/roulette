@@ -2,12 +2,14 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    const ROLE_USER = 'user';
+    const ROLE_ADMIN = 'admin';
+
     use Notifiable;
 
     /**
@@ -36,4 +38,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function raffles()
+    {
+        return $this->hasMany(Raffle::class);
+    }
+
+    public function prizes()
+    {
+        return $this->hasManyThrough(Prize::class, Raffle::class);
+    }
 }

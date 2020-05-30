@@ -2,9 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\User;
+use App\Prize;
 use Faker\Generator as Faker;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /*
@@ -18,13 +17,20 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(Prize::class, function (Faker $faker) {
+    $type = $faker->randomElement([
+        Prize::TYPE_MONEY,
+        Prize::TYPE_COINS,
+        Prize::TYPE_STUFF
+    ]);
+    $amount = Prize::TYPE_STUFF == $type
+        ? 1
+        : $faker->randomFloat(2, 0.01, 10);
+
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => Hash::make('secret'), // password
-        'remember_token' => Str::random(10),
-        'role' => User::ROLE_USER,
+        'type' => $type,
+        'title' => $faker->title,
+        'description' => $faker->text(50),
+        'amount' => $amount
     ];
 });
