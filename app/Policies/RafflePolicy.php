@@ -24,8 +24,8 @@ class RafflePolicy
     public function participate(User $user)
     {
         return $user->raffles()
-            ->where('created_at', '<', Carbon::now()->startOfDay())
-            ->sortBy('created_at', SORT_DESC)
+            ->where('created_at', '>', Carbon::now()->startOfDay())
+            ->orderBy('created_at', 'desc')
             ->first() == null;
     }
 }
